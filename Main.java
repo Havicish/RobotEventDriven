@@ -1,36 +1,22 @@
 public class Main {
     public static void main(String[] args) {
         TopicManager topicManager = new TopicManager();
-
-        // Create a subscriber
-        Subscriber newsSubscriber = new Subscriber() {
-            @Override
-            public void onMessage(Message message) {
-                System.out.println("Received message on topic " + message.getTopic() + ": " + message.getContent());
-            }
-        };
-
     
-        Subscriber motionSubscriber = new Subscriber() {
+        /*Subscriber motionSubscriber = new Subscriber() {
             @Override
-            public void onMessage(Message message) {
-                System.out.println("The robot moved to " + message.getContent());
+            public void onMessage(String topic, String content) {
+                System.out.println("The robot moved to " + content);
             }
         };
-
-   
-        topicManager.subscribe(topic, newsSubscriber);
-
-        // Publish a message to the topic
-        Message message = new Message(topic, "Breaking news!");
-        topicManager.publish( message);
-
-        // Unsubscribe from the topic
-        topicManager.unsubscribe(topic, newsSubscriber);
 
         topicManager.subscribe("motion", motionSubscriber);
 
-        topicManager.publish(new Message("motion", "the left"));
+        topicManager.publish("motion", "the left");*/
+
+        Odometry odometry = new Odometry(topicManager);
+        MotorController motorController = new MotorController(topicManager);
+        Waypoints waypoints = new Waypoints(topicManager);
+        Robot robot = new Robot(topicManager);
 
     }
 }
